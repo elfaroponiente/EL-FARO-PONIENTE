@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Faro Poniente - Envía tu Reporte</title>
+  <!-- Favicon en blanco/transparente para eliminar el planeta genérico -->
+  <link rel="icon" type="image/png" href="https://github.com/elfaroponiente/EL-FARO-PONIENTE/blob/main/LOGO%20PARA%20VENTANA.png?raw=true">
   <style>
     :root {
       --bg-color: #0d1e38;
@@ -101,6 +103,18 @@
       font-size: 0.95rem;
       outline: none;
       transition: all 0.3s ease;
+    }
+
+    select optgroup {
+      background-color: #1a3d70;
+      color: var(--accent-yellow);
+      font-weight: bold;
+    }
+
+    select option {
+      background-color: #0d1e38;
+      color: var(--text-white);
+      font-weight: normal;
     }
 
     input[type="text"]:focus,
@@ -208,6 +222,11 @@
       margin-top: 15px;
       font-weight: 600;
     }
+
+    #customLocationGroup {
+      display: none;
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
@@ -235,19 +254,60 @@
 
       <div class="form-group">
         <label for="description">¿Qué está pasando? <span>*</span></label>
-        <textarea id="description" placeholder="Ej. Choque en la Av. Jesús del Monte a la altura de Interlomas, tráfico detenido..." required></textarea>
+        <textarea id="description" placeholder="Ej. Choque en la Av. Jesús del Monte, tráfico detenido hacia Interlomas..." required></textarea>
       </div>
 
       <div class="form-group">
         <label for="location">Ubicación / Zona <span>*</span></label>
         <select id="location" required>
           <option value="" disabled selected>Selecciona la zona...</option>
-          <option value="Cuajimalpa">Cuajimalpa</option>
-          <option value="Santa Fe">Santa Fe</option>
-          <option value="Huixquilucan / Interlomas">Huixquilucan / Interlomas</option>
-          <option value="Carretera / Autopista México-Toluca">Carretera / Autopista México-Toluca</option>
-          <option value="Otra">Otra zona del Poniente</option>
+
+          <optgroup label="Cuajimalpa">
+            <option value="Cuajimalpa Centro / Alcaldía">Cuajimalpa Centro / Alcaldía</option>
+            <option value="Jesús del Monte">Jesús del Monte</option>
+            <option value="Contadero">Contadero</option>
+            <option value="San Mateo Tlaltenango">San Mateo Tlaltenango</option>
+            <option value="San Lorenzo Acopilco">San Lorenzo Acopilco</option>
+            <option value="El Yaqui / Vista Hermosa">El Yaqui / Vista Hermosa</option>
+            <option value="La Navidad / Memetla">La Navidad / Memetla</option>
+          </optgroup>
+
+          <optgroup label="Santa Fe">
+            <option value="Santa Fe (Zona Escolar / Universidades)">Santa Fe (Zona Escolar / Universidades)</option>
+            <option value="Santa Fe (Corporativos / Park Plaza)">Santa Fe (Corporativos / Park Plaza)</option>
+            <option value="Centro Comercial Santa Fe / Samara">Centro Comercial Santa Fe / Samara</option>
+            <option value="Parque La Mexicana">Parque La Mexicana</option>
+            <option value="Paseo de los Tamarindos / Arcos Cúpula">Paseo de los Tamarindos / Arcos Cúpula</option>
+            <option value="Palo Alto / Lomas de Santa Fe">Palo Alto / Lomas de Santa Fe</option>
+          </optgroup>
+
+          <optgroup label="Huixquilucan / Interlomas">
+            <option value="Interlomas (Zona Comercial / Paseo Interlomas)">Interlomas (Zona Comercial / Paseo Interlomas)</option>
+            <option value="Jesús del Monte (Huixquilucan)">Jesús del Monte (Huixquilucan)</option>
+            <option value="Bosques de las Palmas / Lomas Anáhuac">Bosques de las Palmas / Lomas Anáhuac</option>
+            <option value="Hacienda de las Palmas / La Enramada">Hacienda de las Palmas / La Enramada</option>
+            <option value="Magnocentro / Palma Criolla">Magnocentro / Palma Criolla</option>
+            <option value="Bosque Real">Bosque Real</option>
+            <option value="Huixquilucan Pueblo / Cabecera">Huixquilucan Pueblo / Cabecera</option>
+          </optgroup>
+
+          <optgroup label="Vías Principales / Carreteras">
+            <option value="Carretera México-Toluca">Carretera México-Toluca</option>
+            <option value="Autopista México-Toluca">Autopista México-Toluca</option>
+            <option value="Avenida Vasconcelos / Tamaulipas">Avenida Vasconcelos / Tamaulipas</option>
+            <option value="Chamapa - Lechería">Chamapa - Lechería</option>
+            <option value="Puente de la Unidad / Túneles Santa Fe">Puente de la Unidad / Túneles Santa Fe</option>
+          </optgroup>
+
+          <optgroup label="Otra Ubicación">
+            <option value="OTRA">📍 Otra zona (Especificar abajo)</option>
+          </optgroup>
+
         </select>
+
+        <div id="customLocationGroup">
+          <input type="text" id="customLocation" placeholder="Escribe la calle, colonia o referencia exacta...">
+        </div>
       </div>
 
       <div class="form-group">
@@ -274,6 +334,20 @@
 
     const fileInput = document.getElementById('mediaFile');
     const fileNameDisplay = document.getElementById('fileName');
+    const locationSelect = document.getElementById('location');
+    const customLocationGroup = document.getElementById('customLocationGroup');
+    const customLocationInput = document.getElementById('customLocation');
+
+    locationSelect.addEventListener('change', (e) => {
+      if (e.target.value === 'OTRA') {
+        customLocationGroup.style.display = 'block';
+        customLocationInput.required = true;
+      } else {
+        customLocationGroup.style.display = 'none';
+        customLocationInput.required = false;
+        customLocationInput.value = '';
+      }
+    });
 
     fileInput.addEventListener('change', (e) => {
       if (e.target.files.length > 0) {
@@ -298,6 +372,11 @@
         const fileName = `${Date.now()}.${fileExt}`;
         const filePath = `reportes/${fileName}`;
 
+        let zonaFinal = locationSelect.value;
+        if (zonaFinal === 'OTRA') {
+          zonaFinal = 'Otra: ' + customLocationInput.value;
+        }
+
         const { data: storageData, error: storageError } = await supabaseClient
           .storage
           .from('evidencias')
@@ -317,7 +396,7 @@
           .insert([
             {
               descripcion: document.getElementById('description').value,
-              zona: document.getElementById('location').value,
+              zona: zonaFinal,
               credito: document.getElementById('creditName').value || 'Anónimo',
               archivo_url: archivoUrl
             }
@@ -328,6 +407,7 @@
         successMsg.style.display = 'block';
         document.getElementById('reportForm').reset();
         fileNameDisplay.textContent = '';
+        customLocationGroup.style.display = 'none';
 
         setTimeout(() => {
           successMsg.style.display = 'none';
@@ -338,7 +418,6 @@
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Enviar Reporte 🚀';
-        link rel="icon" type="image/png" href="https://github.com/elfaroponiente/EL-FARO-PONIENTE/blob/main/Untitled%20design.png?raw=true"
       }
     });
   </script>
