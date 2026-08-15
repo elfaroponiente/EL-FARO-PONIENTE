@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Faro Poniente - Envía tu Reporte</title>
+  <style>
+    :root {
+      --bg-color: #0d1e38;
+      --card-bg: #1a3d70;
+      --accent-yellow: #ebb820;
+      --text-white: #ffffff;
+      --text-muted: #b0c4de;
+      --border-color: #275291;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      width: 100%;
+      max-width: 550px;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-color);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo-container {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 12px auto;
+      border-radius: 100%;
+      overflow: hidden;
+    }
+
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      color: var(--text-white);
+      letter-spacing: 0.5px;
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-white);
+    }
+
+    label span {
+      color: var(--accent-yellow);
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 15px;
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-white);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--accent-yellow);
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .file-drop-area {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      background-color: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+      text-align: center;
+    }
+
+    .file-drop-area:hover {
+      border-color: var(--accent-yellow);
+    }
+
+    .file-input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .file-msg {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .file-name {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--accent-yellow);
+      font-weight: 600;
+    }
+
+    .credit-info-box {
+      background-color: rgba(235, 184, 32, 0.12);
+      border-left: 4px solid var(--accent-yellow);
+      padding: 12px 15px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 20px;
+    }
+
+    .credit-info-box p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .credit-info-box strong {
+      color: var(--text-white);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--accent-yellow);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #ffd034;
+      transform: translateY(-2px);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 15px;
+      background-color: rgba(46, 204, 113, 0.2);
+      border: 1px solid #2ecc71;
+      border-radius: 8px;
+      color: #2ecc71;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="logo-container">
+        <img src="https://github.com/elfaroponiente/EL-FARO-PONIENTE/blob/main/Untitled%20design.png?raw=true" alt="El Faro Poniente">
+      </div>
+      <h1>EL FARO PONIENTE</h1>
+      <p>Envía tu reporte, foto o video de la zona</p>
+    </div>
+
+    <form id="reportForm">
+      
+      <div class="form-group">
+        <label>Foto o Video del reporte <span>*</span></label>
+        <div class="file-drop-area">
+          <span class="file-msg">📁 Toca aquí para subir tu foto o video</span>
+          <span class="file-msg">(JPG, PNG, MP4)</span>
+          <input class="file-input" type="file" id="mediaFile" accept="image/*,video/*" required>
+          <div class="file-name" id="fileName"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">¿Qué está pasando? <span>*</span></label>
+        <textarea id="description" placeholder="Ej. Choque en la Av. Jesús del Monte a la altura de Interlomas, tráfico detenido..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Ubicación / Zona <span>*</span></label>
+        <select id="location" required>
+          <option value="" disabled selected>Selecciona la zona...</option>
+          <option value="Cuajimalpa">Cuajimalpa</option>
+          <option value="Santa Fe">Santa Fe</option>
+          <option value="Huixquilucan / Interlomas">Huixquilucan / Interlomas</option>
+          <option value="Carretera / Autopista México-Toluca">Carretera / Autopista México-Toluca</option>
+          <option value="Otra">Otra zona del Poniente</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="creditName">¿Cómo quieres que te cite en los créditos?</label>
+        <input type="text" id="creditName" placeholder="Ej. @tu_usuario_instagram o Nombre / Anónimo">
+      </div>
+
+      <div class="credit-info-box">
+        <p><strong>ℹ️ Sobre tus créditos:</strong> Respetamos el trabajo de la comunidad. Tu usuario o nombre aparecerá etiquetado directamente en el post/video (ej: <code>📸 Vía @tu_usuario</code>). Si prefieres mantener el anonimato, simplemente escribe <em>Anónimo</em>.</p>
+      </div>
+
+      <button type="submit" class="submit-btn">Enviar Reporte 🚀</button>
+      <div class="success-msg" id="successMsg">¡Reporte recibido! Muchas gracias por colaborar con la comunidad.</div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = "https://insdyosluaodkptuvfwg.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_qAdq55tKUDj7_uQLMkNxvQ_egURHEWv";
+    
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const fileInput = document.getElementById('mediaFile');
+    const fileNameDisplay = document.getElementById('fileName');
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        fileNameDisplay.textContent = 'Archivo seleccionado: ' + e.target.files[0].name;
+      } else {
+        fileNameDisplay.textContent = '';
+      }
+    });
+
+    document.getElementById('reportForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const successMsg = document.getElementById('successMsg');
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Subiendo reporte... ⏳';
+
+      try {
+        const file = fileInput.files[0];
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Date.now()}.${fileExt}`;
+        const filePath = `reportes/${fileName}`;
+
+        const { data: storageData, error: storageError } = await supabaseClient
+          .storage
+          .from('evidencias')
+          .upload(filePath, file);
+
+        if (storageError) throw storageError;
+
+        const { data: publicUrlData } = supabaseClient
+          .storage
+          .from('evidencias')
+          .getPublicUrl(filePath);
+
+        const archivoUrl = publicUrlData.publicUrl;
+
+        const { error: dbError } = await supabaseClient
+          .from('reportes')
+          .insert([
+            {
+              descripcion: document.getElementById('description').value,
+              zona: document.getElementById('location').value,
+              credito: document.getElementById('creditName').value || 'Anónimo',
+              archivo_url: archivoUrl
+            }
+          ]);
+
+        if (dbError) throw dbError;
+
+        successMsg.style.display = 'block';
+        document.getElementById('reportForm').reset();
+        fileNameDisplay.textContent = '';
+
+        setTimeout(() => {
+          successMsg.style.display = 'none';
+        }, 4000);
+
+      } catch (err) {
+        alert('Error al enviar el reporte: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar Reporte 🚀';
+      }
+    });
+  </script>
+</body>
+</html>
